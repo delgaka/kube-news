@@ -1,0 +1,39 @@
+# version: "3.8"
+
+services:
+  postgre:
+    image: postgres:12.17
+    container_name: postgre
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: kubenews
+      POSTGRES_PASSWORD: Pg123
+      POSTGRES_DB: kubenews
+    volumes:
+      - postgre_docker_vol:/var/lib/postgresql/data #docker volume
+      # - /Users/delgaka/Dev/devopspro/kube-news/postgre_vol:/var/lib/postgresql/data #bind mount
+    networks:
+      - kube_news_net
+  kube_news:
+    image: delgaka/kube-news:v2
+    container_name: kube_news
+    ports:
+      - "8080:8080"
+    networks:
+      - kube_news_net
+    environment:
+      DB_USERNAME: kubenews
+      DB_PASSWORD: Pg123
+      DB_DATABASE: kubenews
+      DB_HOST: postgre
+
+volumes:
+  postgre_docker_vol:
+    name: postgre_docker_vol
+    # external: true # usado quando o vol é criado externamente.
+
+networks:
+  kube_news_net:
+    name: kube_news_net
+    driver: bridge
