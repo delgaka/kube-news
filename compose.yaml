@@ -6,6 +6,11 @@ services:
     container_name: postgre
     ports:
       - "5432:5432"
+    # profile é uma feature do docker-compose que permite definir variáveis de ambiente de acordo com o profile.
+    # para usar profiles, é necessário usar o parâmetro --profile no comando docker-compose.
+    # profiles:
+    #   - dev
+    #   - hml
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -16,30 +21,30 @@ services:
     networks:
       - kube_news_net
 
-# include tem que ser no mesmo nível que o services.  
-include:  
-- ./kube-news.compose.yaml
+# # include tem que ser no mesmo nível que o services.  
+# include:  
+# - ./kube-news.compose.yaml
 
   # Declaração de serviço
-  # kube_news:
-  #   image: delgaka/kube-news:${KUBE_NEWS_TAG:-latest} # define imagem padrão latest quando não há tag definida na variável.
-  #   build:
-  #     context: ./src
-  #     dockerfile: Dockerfile
-  #   container_name: kube_news
-  #   ports:
-  #     - "8080:8080"
-  #   networks:
-  #     - kube_news_net
-  #   depends_on:
-  #     - postgre
-  #   environment:
-  #     DB_USERNAME: ${POSTGRES_USER}
-  #     DB_PASSWORD: ${POSTGRES_PASSWORD}
-  #     DB_DATABASE: ${POSTGRES_DB}
-  #     DB_HOST: postgre
+  kube_news:
+    image: delgaka/kube-news:${KUBE_NEWS_TAG:-latest} # define imagem padrão latest quando não há tag definida na variável.
+    build:
+      context: ./src
+      dockerfile: Dockerfile
+    container_name: kube_news
+    ports:
+      - "8080:8080"
+    networks:
+      - kube_news_net
+    depends_on:
+      - postgre
+    environment:
+      DB_USERNAME: ${POSTGRES_USER}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+      DB_DATABASE: ${POSTGRES_DB}
+      DB_HOST: postgre
   
-  # extends mode
+  # # extends mode
   # web:
   #   extends:
   #     file: ./kube-news.compose.yaml
