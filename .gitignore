@@ -69,8 +69,8 @@ node_modules/
 # .yarn-integrity
 
 # # dotenv environment variables file
-# .env
-# .env.test
+.env*
+.env.test
 
 # # parcel-bundler cache (https://parceljs.org/)
 # .cache
@@ -105,5 +105,5 @@ node_modules/
 
 *.Identifier
 
-*.yaml
-./compose.yaml
+# *.yaml
+# ./compose.yaml

@@ -1,0 +1,11 @@
+services:
+  nginx:
+    image: nginx
+    # network_mode: host # não funciona no mac
+    ports:
+      - "8080:80"
+
+  curl:
+    image: nginx
+    extra_hosts:
+      aula.docker.kayo.com: 192.168.68.106
