@@ -1,0 +1,6 @@
+# nome do arquivo é importante, pois o docker-compose irá procurar por ele. compose.override.yaml
+services:
+  kube_news:
+    image: delgaka/web-kube-news:${KUBE_NEWS_TAG:-latest} # Sobrescreve a imagem do compose.yaml
+    ports:
+      - "8181:8181" # Adiciona uma nova porta (mas se o container não tiver ela, não adianta de nada)
